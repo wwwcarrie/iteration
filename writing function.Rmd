@@ -190,6 +190,22 @@ f(x = y)
 
 
 
+## function as argument
+
+```{r}
+my_summary = function(x, sum_func){
+  sum_func(x)
+}
+
+
+
+x_vec = rnorm(100, 3, 7)
+
+mean (x_vex)
+median(x_vec)
+
+my_summary(x_vec, IQR)
+```
 
 
 
