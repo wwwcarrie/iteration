@@ -361,11 +361,12 @@ display: none;
 <pre class="r"><code>x_vec = rnorm(30, mean = 5, sd = 3)
 
 (x_vec - mean(x_vec)) / sd(x_vec)</code></pre>
-<pre><code>##  [1] -0.15388743 -0.77195835  0.72314300  0.17609362  0.13113860 -1.16283747
-##  [7]  1.06348503 -1.44938356  1.67260034  2.56659858  0.43820448  0.42505829
-## [13]  0.71065152 -0.89624780 -1.21184042  0.15984594  0.78801295 -1.11870601
-## [19]  0.90726332 -0.06481678 -0.25424996 -0.14828982  1.19578091 -0.15066494
-## [25]  0.89504985 -0.41991123 -0.92711212 -0.68919825 -1.97602402 -0.45779827</code></pre>
+<pre><code>##  [1]  0.501880635  0.980046448 -1.248889459 -0.179387352  2.828628806
+##  [6] -0.735463982 -0.434101202  0.719093178 -0.720093000  0.843342483
+## [11] -0.267923004 -1.056030607  0.888318647 -0.792506566 -2.031148834
+## [16]  0.581898772 -0.327083221 -0.401237275 -0.003546220 -0.764992766
+## [21] -0.787963089  0.758359191  0.004564032 -0.214059844  0.557215311
+## [26]  1.221180501  0.153383305 -0.906395764 -0.917951137  1.750862013</code></pre>
 <p>i want some function compute z-sores</p>
 <pre class="r"><code>z_scores = function(x) {
   
@@ -377,18 +378,28 @@ display: none;
     stop(&quot;input must have at least three numbers&quot;)
   }
   
-  z = (x - mean(x) / sd(x))
-  return(z)
+mean_x = mean(x)
+sd_x = sd(x)
+
+tibble(
+  mean = mean_x,
+  sd = sd_x
+)
+
+
+
 }
 
 
 z_scores(x_vec)</code></pre>
-<pre><code>##  [1]  3.3983879  1.5240921  6.0579765  4.3990531  4.2627273  0.3387539
-##  [7]  7.0900614 -0.5301951  8.9371993 11.6482428  5.1939024  5.1540367
-## [13]  6.0200962  1.1471852  0.1901528  4.3497821  6.2546942  0.4725822
-## [19]  6.6163201  3.6684940  3.0940392  3.4153626  7.4912477  3.4081600
-## [25]  6.5792829  2.5916725  1.0535894  1.7750615 -2.1272287  2.4767803</code></pre>
+<pre><code>## # A tibble: 1 × 2
+##    mean    sd
+##   &lt;dbl&gt; &lt;dbl&gt;
+## 1  5.28  2.91</code></pre>
+<p>check that the function works.</p>
+<pre class="r"><code>x_vec = rnorm(100, mean = 3, sd =4)</code></pre>
 <p>Try me function on some other things</p>
+<p>these should give errors</p>
 <pre class="r"><code>z_scores(3)</code></pre>
 <pre><code>## Error in z_scores(3): input must have at least three numbers</code></pre>
 <pre class="r"><code>z_scores(&quot;my name is Jeff&quot;)</code></pre>
@@ -397,6 +408,40 @@ z_scores(x_vec)</code></pre>
 <pre><code>## Error in z_scores(mtcars): input must be numeric</code></pre>
 <pre class="r"><code>z_scores(c(TRUE, TRUE,FALSE, TRUE)) # mean of (1,1,0,1)</code></pre>
 <pre><code>## Error in z_scores(c(TRUE, TRUE, FALSE, TRUE)): input must be numeric</code></pre>
+</div>
+<div id="multiple-inputs" class="section level2">
+<h2>multiple inputs</h2>
+<p>do this with function</p>
+<pre class="r"><code>sim_data =
+  tibble(
+    x = rnorm (n = 100, mean = 4, sd = 3)
+  )
+
+sim_data |&gt;
+  summarize (
+    mean = mean(x),
+    sd = sd(x)
+  )</code></pre>
+<pre><code>## # A tibble: 1 × 2
+##    mean    sd
+##   &lt;dbl&gt; &lt;dbl&gt;
+## 1  3.53  3.44</code></pre>
+<pre class="r"><code>sim_mean_sd = function(n, mu, sigma) #provide default value for these
+  {
+  
+  sim_data =
+  tibble(
+    x = rnorm (n = n, mean = mu, sd = sigma)
+  )
+
+sim_data |&gt;
+  summarize (
+    mean = mean(x),
+    sd = sd(x)
+  )
+  
+  sim_mean_sd(sample_size = 100, mu = 6, sigma = 3) #using these rather than default value
+}</code></pre>
 </div>
 
 
