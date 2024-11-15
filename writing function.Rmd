@@ -117,6 +117,77 @@ sim_data |>
 }
 ```
 
+## let's review Napoleon Dynamite
+ 
+turn code into function
+```{r}
+url = ""
+
+read_page_reviews = functions(url) {
+  dynamite_html = read_html(url)
+  
+  review_titles = 
+    dynamite_html |>
+    html_nodes(".a-text-bold span")|>
+    html_text()
+  
+  review_stars = 
+    dynamite_html |>
+    html_nodes ("#cm_cr-review_list . review_rating") |>
+    html_text ()|>
+    str_extract("^\\d") |>
+    as.numeric()
+  
+  review_text = 
+    dynamite_html |>
+    html_nodes(".review-text-content span") |>
+    html_text () |>
+    str_replace_all ("\n","")|>
+    str_trim()
+  
+  reviews = 
+    tibble (
+      tittle = review_tittles,
+      stars = review_stars,
+      text = review_text
+    )
+  
+    reviews
+}
+```
+
+
+let's read a few pages of reviews
+```{r}
+url = 
+  dynamite_urls = str_c (dynamite_url_base, 1:5)
+
+all_reviews = 
+  bind_rows(
+    read_page_reviews(dynamite_urls[1]),
+    read_page_reviews(dynamite_urls[2]),
+    read_page_reviews(dynamite_urls[3]),
+    read_page_reviews(dynamite_urls[4]),
+    read_page_reviews(dynamite_urls[5]),
+    
+  )
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
