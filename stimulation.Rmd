@@ -88,7 +88,7 @@ boot_sample(sim_df_nonconst) |>
   broom:: tidy()
 ```
 
-
+## many samples and analysis
 
 
 
